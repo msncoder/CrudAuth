@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    
+<div class="row">
+    
+    <div class="col-md-4  d-flex flex-column justify-content-center">
+        <h3 class="text-center">Products</h3>
+
+        {% if messages %}
+        {% for message in messages %}
+
+        <div class="alert alert-{{message.tags}} alert-dismissible">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>{{ message }}</strong> 
+          </div>
+          {% endfor %}
+        {% endif %}
+
+        <form action="" method="post" novalidate >
+            {% csrf_token %}
+            {% for fm in fm %}
+            <div class="form-group my-3">
+                {{fm.label_tag}} {{fm}} <small class="text-danger"> {{fm.errors|striptags}} </small>
+            </div>
+            {% endfor %}
+            <input type="submit" value="Submit" class="btn btn-primary form-control my-3">
+            <a href="{% url 'dashboard' %}" class='btn btn-warning '>Dashboard</a>
+            {% if form.non_fields_errors %}
+            {% for error in non_fields_errors %}
+            <p class="alert alert-danger my-3">
+                {{error}}
+            </p>
+            {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+
+    <div class="col-md-2"></div>
+
+    <div class="col-md-6">
+    
+        <div class="card card-body">
+            <h5 class="text-center ">Products</h5>
+        </div>
+
+        <div class="card card-body ">
+            <table class="table table-sm">
+                <tr class='text-center '>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Update Product</th>
+                    <th>Remove Product</th>
+                </tr>
+
+                {% for i in item %}
+                <tr class=' text-center '>
+                    <td>{{i.name}}</td>
+                    <td>{{i.category}}</td>
+                    <td>{{i.price}}</td>
+                    <td><a href="{% url "update_product" i.id  %}" class="btn btn-sm btn-info">Update</a></td>
+                    <td><a href="{% url "delete_product" i.id  %}" class="btn btn-sm btn-warning">Remove</a></td>
+                </tr>
+                
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+{% endblock %}
