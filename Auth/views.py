@@ -39,25 +39,25 @@ class EmailThread(threading.Thread):
         self.email_message.send()
 
 def Signup(request):
-    if request.method == "POST":
+    if request.method == "POST": # if request method and name=email,name-pass1 and name=pass2 in html fields it proccess it here
         email = request.POST['email']
         password = request.POST['pass1']
         confirm_password = request.POST['pass2']
-        if password != confirm_password:
+        if password != confirm_password:   # if pass1 and pass2 is not match then through error message above signup form
             messages.warning(request,"Passwrod Is Not Matching")
             return render(request,'Auth/signup.html')
         
-        try:
-            if User.objects.get(username=email):
+        try: # you can't handle the error with if else condition. that time use try exept block (0divison error)
+            if User.objects.get(username=email): # if user name is already exist in database
                 messages.warning(request,"Email already Taken")
                 return render(request,'Auth/signup.html')
     
-        except Exception as identifier:
+        except Exception as identifier: # it will not present username in database
             pass
         
-        user = User.objects.create_user(email,email,password)
-        user.is_active = False
-        user.save()   
+        user = User.objects.create_user(email,email,password) # it create user in database User model
+        user.is_active = False # superuser False
+        user.save()   # it save user
         current_site = get_current_site(request)
         email_subject = "Activate Your Account"
         message = render_to_string('Auth/activate.html',{
@@ -72,7 +72,8 @@ def Signup(request):
         messages.info(request,"Activate Your Account By Clicking Link on your Email")
         return redirect("/login/")
     
-    return render(request,'Auth/signup.html')
+    else:
+        return render(request,'Auth/signup.html')
 
 
 
