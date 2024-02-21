@@ -126,7 +126,7 @@ def update_customer(request,id):
             fm.save()
             messages.success(request,"Update Created")
             fm = CustomerForm()
-            return render(request,'update_customer.html',{'fm':fm})
+            return render(request,'update_customer.html',{'fm':fm,"cus":cus})
     else:
         cus = Customer.objects.get(pk=id)
         fm = CustomerForm(instance=cus)
