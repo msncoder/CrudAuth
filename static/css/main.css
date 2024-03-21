@@ -13,3 +13,25 @@ body{
 #order-pending{
     background-color: #7CD1C0;
 }
+
+.custom-shape-divider-bottom-1711049072 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1711049072 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+    transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-1711049072 .shape-fill {
+    fill: #50D5E3;
+}
